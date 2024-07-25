@@ -7,19 +7,19 @@ import (
 )
 
 // 用于匿名实现Closer接口
-type closer struct {
-	close func() error
+type AnonymousCloser struct {
+	AnonymousClose func() error
 }
 
-func (c *closer) Close() error {
-	if c.close != nil {
-		return c.close()
+func (c *AnonymousCloser) Close() error {
+	if c.AnonymousClose != nil {
+		return c.AnonymousClose()
 	}
 	return errors.New("close is nil")
 }
 
 func New(close func() error) io.Closer {
-	return &closer{
-		close: close,
+	return &AnonymousCloser{
+		AnonymousClose: close,
 	}
 }
